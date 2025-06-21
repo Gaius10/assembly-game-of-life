@@ -12,13 +12,13 @@ main:
     main_loop:
         call clockDelay
         call liveUpdate
+        call screenUpdate
 
         jmp main_loop
     halt
 
 ;; #include src/init.asm
 ;; #include src/clock.asm
-;; #include src/scenario.asm
 ;; #include src/screen.asm
 ;; #include src/live.asm
 

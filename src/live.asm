@@ -1,8 +1,17 @@
 liveUpdate:
     push r1
+    push r2
+    push r3
+    push r4
+    push r5
+    push r6
     push r7
 
-    loadn r1, #1200
+    loadn r1, #1199
+    loadn r2, #2
+    loadn r3, #3
+    loadn r4, #' '
+    loadn r5, #'#'
 
     ;; for (int i = 1200; i > 0; i--):
     _liveUpdate_loop:
@@ -10,26 +19,77 @@ liveUpdate:
         mov r7, r1
         call liveCountNeighbors
 
+        ;; comparison for first if's
+        cmp r0, r2
+
+        loadn r6, #scenario
+        add r6, r6, r1
+
         ;; n_neighbors < 2 -> cell dies (underpopulation)
         ;; if (r0 < 2): scenario[i] = ' '
+        _liveUpdate_loop_underpopulation:
+            jeg _liveUpdate_loop_lives
+            storei r6, r4
+            jmp _liveUpdate_loop_end
+            ;;
 
         ;; n_neighbors is 2 or 3 -> cell lives
-        ;; if (r0 < 2): scenario[i] = scenario[i]
+        ;; if (r0 == 2 || r0 == 3): scenario[i] = scenario[i]
+        _liveUpdate_loop_lives:
+            jeq _liveUpdate_loop_end
+            ;; no need to do anything...
+
+        ;; comparison for the last if's
+        cmp r0, r3
 
         ;; n_neighbors > 3 -> cell dies (overpopulation)
-        ;; if (r0 < 2): scenario[i] = ' '
+        ;; if (r0 > 3): scenario[i] = ' '
+        _liveUpdate_loop_overpopulation:
+            jel _liveUpdate_loop_reproduction
+            storei r6, r4
+            jmp _liveUpdate_loop_end
+            ;;
 
         ;; n_neighbors exactly 3 -> reproduction
         ;; if (r0 == 3): scenario[i] = '#'
+        _liveUpdate_loop_reproduction:
+            jne _liveUpdate_loop_end
+            storei r6, r5
+            ;;
 
         _liveUpdate_loop_end:
             dec r1
             jnz _liveUpdate_loop
 
     ;; calc for i == 0
-    ;; ...
+    mov r7, r1
+    call liveCountNeighbors
+    loadn r6, #scenario
+
+    cmp r0, r2
+    jeq _liveUpdate_end
+    jgr _liveUpdate_last_reproduces
+    jle _liveUpdate_last_dies
+
+    _liveUpdate_last_dies:
+        storei r6, r4
+        jmp _liveUpdate_end
+        ;;
+
+    _liveUpdate_last_reproduces:
+        storei r6, r5
+        jmp _liveUpdate_end
+        ;;
+
+    _liveUpdate_end:
+        ;;
 
     pop r7
+    pop r6
+    pop r5
+    pop r4
+    pop r3
+    pop r2
     pop r1
     rts
 
