@@ -9,7 +9,7 @@ main:
     ;;
     ;; Loop principal
     ;;
-    ; main_loop:
+    main_loop:
         call clockDelay
         call liveUpdate
 
