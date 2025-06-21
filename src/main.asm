@@ -20,6 +20,7 @@ main:
 ;; #include src/clock.asm
 ;; #include src/scenario.asm
 ;; #include src/screen.asm
+;; #include src/live.asm
 
 ;; #include config/general.asm
 ;; #include config/screen.asm
