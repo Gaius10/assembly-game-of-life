@@ -10,10 +10,10 @@ main:
     ;; Loop principal
     ;;
     ; main_loop:
-    ;     call clockDelay
-    ;     call live
+        call clockDelay
+        call liveUpdate
 
-    ;     jmp main_loop
+        jmp main_loop
     halt
 
 ;; #include src/init.asm
