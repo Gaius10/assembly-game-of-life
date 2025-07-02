@@ -22,7 +22,7 @@ liveUpdate:
         ;; comparison for first if's
         cmp r0, r2
 
-        loadn r6, #scenario
+        loadn r6, #scenario_tmp
         add r6, r6, r1
 
         ;; n_neighbors < 2 -> cell dies (underpopulation)
