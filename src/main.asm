@@ -3,21 +3,23 @@ jmp main
 clock: var #1
 scenario: var #1200
 scenario_buffer: var #1200
+scenario_id: var #1
 
 main:
     call menuStart
-    call initGame
+    call menuSelectScenarioId
+    ; call initGame
 
     ;;
     ; Loop principal
     ;;
-    main_loop:
-        call clockDelay
-        call liveUpdate
-        call screenUpdate
+    ; main_loop:
+        ; call clockDelay
+        ; call liveUpdate
+        ; call screenUpdate
 
-        jmp main_loop
-    halt
+        ; jmp main_loop
+    ; halt
 
 ;; #include src/menu.asm
 ;; #include src/init.asm
