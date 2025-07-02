@@ -6,17 +6,17 @@ scenario_buffer: var #1200
 
 main:
     call menuStart
-    ; call initGame
+    call initGame
 
     ;;
     ; Loop principal
     ;;
-    ; main_loop:
-        ; call clockDelay
-        ; call liveUpdate
-        ; call screenUpdate
+    main_loop:
+        call clockDelay
+        call liveUpdate
+        call screenUpdate
 
-        ; jmp main_loop
+        jmp main_loop
     halt
 
 ;; #include src/menu.asm

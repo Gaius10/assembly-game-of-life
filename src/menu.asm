@@ -13,24 +13,44 @@ menuStart:
     push r6
     push r7
 
+    loadn r1, #13
+
     _menuStart_loop:
         loadn r7, #START_MENU_01_L00
         call initGameScenario
         call screenUpdate
         call clockDelay
-        call clockDelay
+
+        inchar r0
+        cmp r0, r1
+        jeq _menuStart_end
 
         loadn r7, #START_MENU_02_L00
         call initGameScenario
         call screenUpdate
         call clockDelay
-        call clockDelay
+
+        inchar r0
+        cmp r0, r1
+        jeq _menuStart_end
 
         loadn r7, #START_MENU_03_L00
         call initGameScenario
         call screenUpdate
         call clockDelay
+
+        inchar r0
+        cmp r0, r1
+        jeq _menuStart_end
+
+        loadn r7, #START_MENU_04_L00
+        call initGameScenario
+        call screenUpdate
         call clockDelay
+
+        inchar r0
+        cmp r0, r1
+        jeq _menuStart_end
 
         jmp _menuStart_loop
         ;;

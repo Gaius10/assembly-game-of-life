@@ -9,5 +9,5 @@ CLOCK_MSB: var #1
 ;; Em outros processadores, ajustar esse número de acordo.
 ;;
 static CLOCK_LSB, #40000
-static CLOCK_MSB, #250
+static CLOCK_MSB, #300
 
