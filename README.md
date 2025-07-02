@@ -1,6 +1,6 @@
-# ZÉ BOMBINHA 2
+# John Conway's Game Of Life
 
-Nossa versão do jogo Bomber Men feita para rodar no processador do Simões.
+Nossa versão do game of life, feita para rodar no processador do Simões.
 Link para o repositório do processador do ICMC (A.K.A. processador do Simões): https://github.com/simoesusp/Processador-ICMC
 
 ## 1. Como rodar isso na sua máquina
@@ -10,8 +10,8 @@ Link para o repositório do processador do ICMC (A.K.A. processador do Simões):
 Abra seu terminal e digite:
 
 ```sh
-git clone git@github.com:Gaius10/ze_bombinha_2.git
-cd ze_bombinha_2
+git clone git@github.com:Gaius10/assembly-game-of-life.git
+cd assembly-game-of-life
 make run
 ```
 ### 1.2 Caso vc use Windows
@@ -32,6 +32,6 @@ Desinstale seu sistema operacional, instale alguma distro Linux e então pule pa
 Um esqueleto desse repositório ficará disponível em algum lugar do github.
 Ele conterá apenas nosso makefile, os utilitários e a estrutura de pastas, é só baixar e começar a codar em assembly!
 
-## 5. Como criar mods
+## 5. Como adicionar/editar cenários
 
 @todo
