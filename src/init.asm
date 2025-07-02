@@ -12,7 +12,7 @@ initGame:
 
     ;; Carrega mapa de cenário
     ;; initGameScenario(r7: scenario_config)
-    loadn r7, #CENARIO1_L01
+    loadn r7, #SCENARIO4_L01
     call initGameScenario
 
     ;; Desenha tela inicial

@@ -27,4 +27,7 @@ main:
 
 ;; #include config/general.asm
 ;; #include config/menu.asm
-;; #include config/scenarios.asm
+;; #include config/scenario01.asm
+;; #include config/scenario02.asm
+;; #include config/scenario03.asm
+;; #include config/scenario04.asm
