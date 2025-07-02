@@ -2,6 +2,7 @@ jmp main
 
 clock: var #1
 scenario: var #1200
+scenario_buffer: var #1200
 
 main:
     call initGame

@@ -20,9 +20,10 @@ liveUpdate:
         call liveCountNeighbors
 
         ;; comparison for first if's
+        ;; num_of_neighbors(cell) == #2
         cmp r0, r2
 
-        loadn r6, #scenario
+        loadn r6, #scenario_buffer
         add r6, r6, r1
 
         ;; n_neighbors < 2 -> cell dies (underpopulation)
@@ -61,27 +62,28 @@ liveUpdate:
             dec r1
             jnz _liveUpdate_loop
 
-    ;; calc for i == 0
-    mov r7, r1
-    call liveCountNeighbors
-    loadn r6, #scenario
+    ; ;; calc for i == 0
+    ; mov r7, r1
+    ; call liveCountNeighbors
+    ; loadn r6, #scenario
 
-    cmp r0, r2
-    jeq _liveUpdate_end
-    jgr _liveUpdate_last_reproduces
-    jle _liveUpdate_last_dies
+    ; cmp r0, r2
+    ; jeq _liveUpdate_end
+    ; jgr _liveUpdate_last_reproduces
+    ; jle _liveUpdate_last_dies
 
-    _liveUpdate_last_dies:
-        storei r6, r4
-        jmp _liveUpdate_end
-        ;;
+    ; _liveUpdate_last_dies:
+    ;     storei r6, r4
+    ;     jmp _liveUpdate_end
+    ;     ;;
 
-    _liveUpdate_last_reproduces:
-        storei r6, r5
-        jmp _liveUpdate_end
-        ;;
+    ; _liveUpdate_last_reproduces:
+    ;     storei r6, r5
+    ;     jmp _liveUpdate_end
+    ;     ;;
 
     _liveUpdate_end:
+        call liveFlushScenarioBuffer
         ;;
 
     pop r7
@@ -97,218 +99,231 @@ liveUpdate:
 ;; @param r7: cell position
 ;;
 liveCountNeighbors:
-    push r1         ;; aux
+    push r1
     push r2
     push r3
     push r4
     push r5
     push r6
-    push r7         ;; a.k.a.: x
+    push r7
 
-    loadn r0, #0    ;; a.k.a.: counter
-    loadn r1, #41
-    loadn r2, #40
-    loadn r3, #39
-    loadn r4, #'#'
-    loadn r5, #scenario
-    ;; r6 <- *scenario
+    loadn r0, #0 ;; a.k.a. counter
+    loadn r1, #scenario
 
-    ;; if (x >= 41 and scenario[x-41] == '#'): counter++
+    ;; if (scenario[x-41] == '#'): counter++
     _liveCountNeighbors_1:
-        ;; if (x < 41): goto next case
-        cmp r7, r1
+        ;; At the FIRST LINE, this neighbor doesn't exist
+        ;; if (x < 40): goto next case
+        loadn r2, #40
+        cmp r7, r2
         jle _liveCountNeighbors_2
 
+        ;; At the FIRST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 0): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
+
+        loadn r2, #0
+        cmp r2, r6
+        jeq _liveCountNeighbors_2
+
+        ;; Increment counter if scenario[x-41] is alive
         ;; if (scenario[x-41] == '#'): counter++
-        sub r7, r7, r1
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_1_reset
+        loadn r2, #41
+        sub r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_2
 
         inc r0
 
-        _liveCountNeighbors_1_reset:
-            pop r7
-            push r7
-            ;;
-
-        ;;
-
-    ;; if (x >= 40 and scenario[x-40] == '#'): counter++
+    ;; if (scenario[x-40] == '#'): counter++
     _liveCountNeighbors_2:
+        ;; At the FIRST LINE, this neighbor doesn't exist
         ;; if (x < 40): goto next case
+        loadn r2, #40
         cmp r7, r2
         jle _liveCountNeighbors_3
 
+        ;; Increment counter if scenario[x-40] is alive
         ;; if (scenario[x-40] == '#'): counter++
-        sub r7, r7, r2
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_2_reset
+        loadn r2, #40
+        sub r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_3
 
         inc r0
-
-        _liveCountNeighbors_2_reset:
-            pop r7
-            push r7
-            ;;
-
         ;;
 
-    ;; if (x >= 39 and scenario[x-39] == '#'): counter++
+
     _liveCountNeighbors_3:
-        ;; if (x < 39): goto next case
-        cmp r7, r3
+        ;; At the FIRST LINE, this neighbor doesn't exist
+        ;; if (x < 40): goto next case
+        loadn r2, #40
+        cmp r7, r2
         jle _liveCountNeighbors_4
 
+        ;; At the LAST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 39): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
+
+        loadn r2, #39
+        cmp r2, r6
+        jeq _liveCountNeighbors_4
+
+        ;; Increment counter if scenario[x-39] is alive
         ;; if (scenario[x-39] == '#'): counter++
-        sub r7, r7, r3
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_3_reset
+        loadn r2, #39
+        sub r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_4
 
         inc r0
-
-        _liveCountNeighbors_3_reset:
-            pop r7
-            push r7
-            ;;
-
         ;;
 
-    ;; if (x >= 1 and scenario[x-1] == '#'): counter++
     _liveCountNeighbors_4:
-        ;; if (x < 1): goto next case
-        inc r7
-        dec r7
-        jz _liveCountNeighbors_5
+        ;; At the FIRST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 0): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
 
+        loadn r2, #0
+        cmp r2, r6
+        jeq _liveCountNeighbors_5
+
+        ;; Increment counter if scenario[x-1] is alive
         ;; if (scenario[x-1] == '#'): counter++
-        dec r7
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_4_reset
+        loadn r2, #1
+        sub r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_5
 
         inc r0
-
-        _liveCountNeighbors_4_reset:
-            inc r7
-            ;;
-
         ;;
 
-    ;; if (x < 1199 and scenario[x+1] == '#'): counter++
     _liveCountNeighbors_5:
-        ;; if (x > 1998): goto next case
-        push r1
-        loadn r1, #1998
-        cmp r7, r1
-        jgr _liveCountNeighbors_6
+        ;; At the LAST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 39): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
 
+        loadn r2, #39
+        cmp r2, r6
+        jeq _liveCountNeighbors_6
+
+        ;; Increment counter if scenario[x+1] is alive
         ;; if (scenario[x+1] == '#'): counter++
-        inc r7
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_5_reset
+        loadn r2, #1
+        add r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_6
 
         inc r0
-
-        _liveCountNeighbors_5_reset:
-            pop r1
-            pop r7
-            push r7
-            push r1
-            ;;
-
         ;;
 
-    ;; if (x + 41 < 1200 and scenario[x + 41] == '#'): counter++
     _liveCountNeighbors_6:
-        pop r1
-
-        ;; if (x > 1158): goto next case
-        push r2
-        loadn r2, #1158
+        ;; At the LAST LINE, this neighbor doesn't exist
+        ;; if (x > 1159): goto next case
+        loadn r2, #1159
         cmp r7, r2
         jgr _liveCountNeighbors_7
 
-        ;; if (scenario[x+41] == '#'): counter++
-        add r7, r7, r1
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_6_reset
+        ;; At the FIRST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 0): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
+
+        loadn r2, #0
+        cmp r2, r6
+        jeq _liveCountNeighbors_7
+
+        ;; Increment counter if scenario[x+39] is alive
+        ;; if (scenario[x+39] == '#'): counter++
+        loadn r2, #39
+        add r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_7
 
         inc r0
-
-        _liveCountNeighbors_6_reset:
-            pop r2
-            pop r7
-            push r7
-            push r2
-            ;;
-
         ;;
 
-    ;; if (x + 40 < 1200 and scenario[x + 40] == '#'): counter++
     _liveCountNeighbors_7:
-        pop r2
-
+        ;; At the LAST LINE, this neighbor doesn't exist
         ;; if (x > 1159): goto next case
-        push r1
-        loadn r1, #1159
-        cmp r7, r1
+        loadn r2, #1159
+        cmp r7, r2
         jgr _liveCountNeighbors_8
 
+        ;; Increment counter if scenario[x+40] is alive
         ;; if (scenario[x+40] == '#'): counter++
-        add r7, r7, r2
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_7_reset
+        loadn r2, #40
+        add r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_8
 
         inc r0
-
-        _liveCountNeighbors_7_reset:
-            pop r1
-            pop r7
-            push r7
-            push r1
-            ;;
-
+        ;;
         ;;
 
-    ;; if (x + 39 < 1200 and scenario[x + 39] == '#'): counter++
     _liveCountNeighbors_8:
-        ; pop r1
-        ; push r1
-
-        ;; if (x > 1160): goto next case (end)
-        loadn r1, #1160
-        cmp r7, r1
+        ;; At the LAST LINE, this neighbor doesn't exist
+        ;; if (x > 1159): goto next case
+        loadn r2, #1159
+        cmp r7, r2
         jgr _liveCountNeighbors_end
 
-        ;; if (scenario[x+39] == '#'): counter++
-        add r7, r7, r2
-        add r6, r5, r7
-        loadi r6, r6
-        cmp r6, r4
-        jne _liveCountNeighbors_8_reset
+        ;; At the LAST COLUMN, this neighbor doesn't exist
+        ;; if (x % 40 == 39): goto next case
+        loadn r2, #40
+        mod r6, r7, r2
+
+        loadn r2, #39
+        cmp r2, r6
+        jeq _liveCountNeighbors_end
+
+        ;; Increment counter if scenario[x+41] is alive
+        ;; if (scenario[x+41] == '#'): counter++
+        loadn r2, #41
+        add r6, r7, r2
+        add r6, r1, r6
+
+        loadi r2, r6
+        loadn r3, #'#'
+        cmp r2, r3
+        jne _liveCountNeighbors_end
 
         inc r0
-
-        _liveCountNeighbors_8_reset:
-            ;;
-
         ;;
 
     _liveCountNeighbors_end:
-        pop r1
         ;;
 
     pop r7
@@ -318,4 +333,33 @@ liveCountNeighbors:
     pop r3
     pop r2
     pop r1
+    rts
+
+;;
+;; Atualiza mapa de scenario principal
+;;
+liveFlushScenarioBuffer:
+    push r0
+    push r1
+    push r2
+    push r3
+
+    loadn r0, #scenario
+    loadn r1, #scenario_buffer
+    loadn r2, #1200
+
+    _liveFlushScenarioBuffer_loop:
+        loadi r3, r1
+        storei r0, r3
+
+        inc r0
+        inc r1
+        dec r2
+        jnz _liveFlushScenarioBuffer_loop
+        ;;
+
+    pop r3
+    pop r2
+    pop r1
+    pop r0
     rts
