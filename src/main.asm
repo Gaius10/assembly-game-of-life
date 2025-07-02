@@ -24,4 +24,4 @@ main:
 ;; #include src/live.asm
 
 ;; #include config/general.asm
-;; #include config/screen.asm
+;; #include config/scenarios.asm
