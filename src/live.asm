@@ -62,25 +62,25 @@ liveUpdate:
             dec r1
             jnz _liveUpdate_loop
 
-    ; ;; calc for i == 0
-    ; mov r7, r1
-    ; call liveCountNeighbors
-    ; loadn r6, #scenario
+    ;; calc for i == 0
+    mov r7, r1
+    call liveCountNeighbors
+    loadn r6, #scenario
 
-    ; cmp r0, r2
-    ; jeq _liveUpdate_end
-    ; jgr _liveUpdate_last_reproduces
-    ; jle _liveUpdate_last_dies
+    cmp r0, r2
+    jeq _liveUpdate_end
+    jgr _liveUpdate_last_reproduces
+    jle _liveUpdate_last_dies
 
-    ; _liveUpdate_last_dies:
-    ;     storei r6, r4
-    ;     jmp _liveUpdate_end
-    ;     ;;
+    _liveUpdate_last_dies:
+        storei r6, r4
+        jmp _liveUpdate_end
+        ;;
 
-    ; _liveUpdate_last_reproduces:
-    ;     storei r6, r5
-    ;     jmp _liveUpdate_end
-    ;     ;;
+    _liveUpdate_last_reproduces:
+        storei r6, r5
+        jmp _liveUpdate_end
+        ;;
 
     _liveUpdate_end:
         call liveFlushScenarioBuffer
