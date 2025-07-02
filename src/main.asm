@@ -31,3 +31,6 @@ main:
 ;; #include config/scenario02.asm
 ;; #include config/scenario03.asm
 ;; #include config/scenario04.asm
+;; #include config/scenario05.asm
+;; #include config/scenario06.asm
+;; #include config/scenario07.asm

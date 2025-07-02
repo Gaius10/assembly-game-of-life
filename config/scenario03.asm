@@ -1,3 +1,5 @@
+; Still lifes and oscillators
+
 SCENARIO3_L01: string " @@    @@    @@    @@    @              "
 SCENARIO3_L02: string " @@   @  @  @  @   @ @  @ @             "
 SCENARIO3_L03: string "       @@    @ @    @    @              "
