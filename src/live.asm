@@ -11,7 +11,7 @@ liveUpdate:
     loadn r2, #2
     loadn r3, #3
     loadn r4, #' '
-    loadn r5, #'#'
+    loadn r5, #'@'
 
     ;; for (int i = 1200; i > 0; i--):
     _liveUpdate_loop:
@@ -134,7 +134,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_2
 
@@ -155,7 +155,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_3
 
@@ -186,7 +186,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_4
 
@@ -210,7 +210,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_5
 
@@ -234,7 +234,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_6
 
@@ -264,7 +264,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_7
 
@@ -285,7 +285,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_8
 
@@ -316,7 +316,7 @@ liveCountNeighbors:
         add r6, r1, r6
 
         loadi r2, r6
-        loadn r3, #'#'
+        loadn r3, #'@'
         cmp r2, r3
         jne _liveCountNeighbors_end
 
