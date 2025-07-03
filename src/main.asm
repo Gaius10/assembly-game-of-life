@@ -5,11 +5,13 @@ scenario: var #1200
 scenario_buffer: var #1200
 
 main:
-    call menuStart
-    call menuSelectScenarioId
+    main_menu:
+        call menuStart
+        call menuSelectScenarioId
 
-    mov r7, r0
-    call initGame
+        mov r7, r0
+        call initGame
+        ;;
 
     ;;
     ; Loop principal
@@ -18,6 +20,12 @@ main:
         call clockDelay
         call liveUpdate
         call screenUpdate
+
+        ;; Tecla 'voltar'
+        inchar r0
+        loadn r1, #'r'
+        cmp r0, r1
+        jeq main_menu
 
         jmp main_loop
     halt
