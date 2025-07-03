@@ -20,6 +20,7 @@ screenUpdate:
             jnz _screenUpdate_loop
 
     ;; por conta do jump if not zero...
+    loadi r3, r2
     outchar r3, r1
 
     pop r3
