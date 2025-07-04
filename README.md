@@ -65,4 +65,4 @@ Ele conterá apenas nosso makefile, os utilitários e a estrutura de pastas, é 
 
 ## 5. Como adicionar/editar cenários
 
-@todo
+Acessar o arquivo config/scenario_custom.asm e editá-lo com o cenário inicial de seu interesse ('@'s representam celulas vivas), em seguida executar o programa.

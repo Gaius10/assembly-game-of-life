@@ -142,9 +142,18 @@ initSelectGameScenario:
     _initSelectGameScenario_6:
         inc r1
         cmp r7, r1
-        jne _initSelectGameScenario_end
+        jne _initSelectGameScenario_7
 
         loadn r0, #SCENARIO7_L01
+        jmp _initSelectGameScenario_end
+        ;;
+
+    _initSelectGameScenario_7:
+        inc r1
+        cmp r7, r1
+        jne _initSelectGameScenario_end
+
+        loadn r0, #SCENARIO_CUSTOM_L01
         jmp _initSelectGameScenario_end
         ;;
 

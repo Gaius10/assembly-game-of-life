@@ -110,7 +110,7 @@ menuSelectScenarioId:
             jne _menuSelectScenario_enter
 
             ;; if (cursor_position >= 762): goto loop
-            loadn r5, #722
+            loadn r5, #762
             cmp r1, r5
             jeg _menuSelectScenario_loop
 
@@ -159,7 +159,7 @@ menuUpdateCursor:
     push r7
 
     loadn r1, #482
-    loadn r2, #7
+    loadn r2, #8
     loadn r3, #39
     loadn r4, #' '
 
