@@ -99,7 +99,6 @@ menuSelectScenarioId:
             loadn r4, #40
             sub r1, r1, r4
             mov r7, r1
-            outchar r0, r7
             call menuUpdateCursor
             jmp _menuSelectScenario_loop
             ;;
