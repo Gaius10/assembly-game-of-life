@@ -20,12 +20,43 @@ Desinstale seu sistema operacional, instale alguma distro Linux e então pule pa
 
 ## 2. Organização das pastas
 
-@todo
+<pre>
+<b>bin</b>
+ |- <i>linker<i>: Executável responsável por efetivar diretivas do tipo #include (arquivo python)
+ |- <i>montador</i>: Montador disponibilizado pelo Simões (pré-compilado)
+ |- <i>simulador</i>: Simulador disponibilizado pelo Simões (pré-compilado)
+</pre>
 
+<pre>
+<b>build</b>
+  Pasta onde ficam os arquivos temporários usados nas etapas de montagem e execução do projeto.
+</pre>
+
+<pre>
+<b>config</b>
+  Arquivos de configuração.
+</pre>
+
+<pre>
+<b>docs</b>
+  Documentos úteis disponibilizados pelo Simões, colocados aqui para maior praticidade nas consultas.
+</pre>
+<pre>
+<b>exemplos</b>
+  Exemplos de alguns projetos antigos que rodam no simulador, colocados aqui para maior praticidade nas consultas.
+</pre>
+<pre>
+<b>src</b>
+  Arquivos fonte do seu projeto. Essa pasta deve, obrigariamente, conter ao menos um arquivo *main.asm* contendo os codigos de inicialização do seu programa.
+</pre>
+<pre>
+<b>static</b>
+  Arquivos estáticos do projeto (ex.: charmaps)
+</pre>
 ## 3. Convenções
 
 - r0 reservado para retorno de funções
-- Funções sempre darão push do r1 pra frente
+- Passagem de argumentos sempre feita do r7 para trás
 
 ## 4. Gostou do framework? Quer copiar a gente?
 
