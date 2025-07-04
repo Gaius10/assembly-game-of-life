@@ -10,4 +10,3 @@ CLOCK_MSB: var #1
 ;;
 static CLOCK_LSB, #40000
 static CLOCK_MSB, #300
-
